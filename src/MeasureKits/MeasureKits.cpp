@@ -28,7 +28,7 @@ auto MeasureKits::measureObstetrics(const Department::Obstetrics& _measureType, 
     auto table{this->m_measureTable[magic_enum::enum_type_name<Department::Obstetrics>()].as_table()};
     if (!table)
     {
-        std::println("table read error!");
+        std::println("Formula table reading failed!");
         return double{};
     }
     exprtk::symbol_table<double> formula{};
@@ -38,7 +38,7 @@ auto MeasureKits::measureObstetrics(const Department::Obstetrics& _measureType, 
     exprtk::parser<double> parser{};
     if (!parser.compile(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, expression))
     {
-        std::println("parser error:", parser.error());
+        std::println("Parser error:{}", parser.error());
         return double{};
     }
     return expression.value();
