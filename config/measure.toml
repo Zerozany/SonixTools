@@ -1,2 +1,6 @@
 [Obstetrics]
-BiparietalDiameter = "10.04 - 0.1416 * Param + 0.000192 * Param^2"
+BiparietalDiameter = "10.04 - 0.1416 * param + 0.000192 * param^2"
+HeadCircumference = "8.60 + 0.057 * param + 0.0000026 * param^3"
+AbdominalCircumference = "10.21 - 0.017 * param + 0.00000346 * param^3"
+CrownRumpLength = "6.085 + 0.084 * param + 0.000028 * param^2"
+FemurLength = "10.34 + 0.148 * param + 0.000026 * param^3"

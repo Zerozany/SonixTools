@@ -2,9 +2,14 @@ _Pragma("once");
 
 namespace Department
 {
-    struct Obstetrics
+
+    enum class Obstetrics
     {
-        static constexpr const char* BiparietalDiameter{"BiparietalDiameter"};
+        BiparietalDiameter,
+        HeadCircumference,
+        AbdominalCircumference,
+        CrownRumpLength,
+        FemurLength,
     };
 
 }  // namespace Department

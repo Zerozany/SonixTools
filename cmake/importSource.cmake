@@ -8,6 +8,10 @@ target_sources(${PROJECT_NAME}
     ${SOURCEFILES}
 )
 
+cmrc_add_resources(${PROJECT_NAME}-resources
+    ${CMAKE_CURRENT_SOURCE_DIR}/config/measure.toml
+)
+
 file(GLOB_RECURSE INCLUDEDIR LIST_DIRECTORIES true
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*"
 )

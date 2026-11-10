@@ -13,5 +13,6 @@ if(MSVC)
         PRIVATE
         "/utf-8"
         "/FS"
+        "/bigobj"
     )
 endif()
