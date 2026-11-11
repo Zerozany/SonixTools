@@ -1,9 +1,9 @@
 [Obstetrics]
 BiparietalDiameter = "9.54 + 1.482 * param_0 + 0.1676 * param_0^2"
-HeadCircumference = "8.60 + 0.057 * param_0 + 0.0000026 * param_0^3"
-AbdominalCircumference = "10.21 - 0.017 * param_0 + 0.00000346 * param_0^3"
-CrownRumpLength = "6.085 + 0.084 * param_0 + 0.000028 * param_0^2"
-FemurLength = "10.34 + 0.148 * param_0 + 0.000026 * param_0^3"
+HeadCircumference = "8.96 + 0.54 * param_0 + 0.0003 * param_0^3"
+AbdominalCircumference = "8.14 + 0.753 * param_0 + 0.0036 * param_0^2"
+CrownRumpLength = "5.8434 + 1.4533 * param_0^0.5 + 0.498508 * param_0"
+FemurLength = "10.35 + 2.46 * param_0 + 0.17 * param_0^2"
 
 [FetalWeight]
 Hadlock1 = "1.304 + 0.05281 * param_0 + 0.1938 * param_1 - 0.004 * param_0 * param_1"
