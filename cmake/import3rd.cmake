@@ -8,13 +8,13 @@ cmrc_add_resource_library(${PROJECT_NAME}-resources
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC
+    PRIVATE
     tomlplusplus::tomlplusplus
     magic_enum::magic_enum
     ${PROJECT_NAME}-resources
 )
 
 target_include_directories(${PROJECT_NAME}
-    PUBLIC
+    PRIVATE
     ${EXPRTK_INCLUDE_DIRS}
 )

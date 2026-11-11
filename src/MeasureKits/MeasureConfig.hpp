@@ -12,4 +12,12 @@ namespace Department
         FemurLength,
     };
 
+    enum class FetalWeight
+    {
+        Hadlock1,
+        Hadlock2,
+        Hadlock3,
+        Hadlock4
+    };
+
 }  // namespace Department
