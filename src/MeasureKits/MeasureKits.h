@@ -2,7 +2,8 @@ _Pragma("once");
 #include <type_traits>
 #include <vector>
 #include <print>
-#include "MeasureKitsPrivate.h"
+#include <any>
+#include "MeasureConfig.hpp"
 
 #if defined(_WIN32) && defined(_MSC_VER)
     #ifdef SonixTools
@@ -15,6 +16,8 @@ _Pragma("once");
 #else
     #define Sonix_API
 #endif
+
+class MeasureKitsPrivate;
 
 class Sonix_API MeasureKits
 {
@@ -33,24 +36,15 @@ public:
     auto measure(T&& _measureType, Args&&... args) noexcept -> double;
 
 private:
+    auto measurePrivate(const std::any& _measureType, const std::vector<double>& _args) noexcept -> double;
+
+private:
     MeasureKitsPrivate* m_measureKitsPrivate{nullptr};
 };
 
 template <typename T, typename... Args>
 inline auto MeasureKits::measure(T&& _measureType, Args&&... args) noexcept -> double
 {
-    double result{};
-    try
-    {
-        result = this->m_measureKitsPrivate->measurePrivate(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(args))...});
-    }
-    catch (const std::exception& _e)
-    {
-        std::println("measure error:{}", _e.what());
-    }
-    catch (...)
-    {
-        std::println("measure error: unknown");
-    }
-    return result;
+    static_assert(std::is_same_v<T, Department::Obstetrics> || std::is_same_v<T, Department::FetalWeight>, "Unsupported _measureType");
+    return this->measurePrivate(std::any{std::forward<T>(_measureType)}, std::vector<double>{static_cast<double>(std::forward<Args>(args))...});
 }
