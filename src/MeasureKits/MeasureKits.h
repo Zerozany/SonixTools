@@ -1,6 +1,7 @@
 _Pragma("once");
 #include <type_traits>
 #include <vector>
+#include <print>
 #include "MeasureKitsPrivate.h"
 
 #if defined(_WIN32) && defined(_MSC_VER)
@@ -38,5 +39,18 @@ private:
 template <typename T, typename... Args>
 inline auto MeasureKits::measure(T&& _measureType, Args&&... args) noexcept -> double
 {
-    return this->m_measureKitsPrivate->measurePrivate(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(args))...});
+    double result{};
+    try
+    {
+        result = this->m_measureKitsPrivate->measurePrivate(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(args))...});
+    }
+    catch (const std::exception& _e)
+    {
+        std::println("measure error:{}", _e.what());
+    }
+    catch (...)
+    {
+        std::println("measure error: unknown");
+    }
+    return result;
 }
