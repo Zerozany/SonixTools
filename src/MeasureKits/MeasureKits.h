@@ -1,9 +1,11 @@
 _Pragma("once");
 #include <type_traits>
 #include <vector>
-#include <print>
-#include <any>
 #include "MeasureConfig.hpp"
+
+#if defined(__ANDROID__)
+    #include <android/log.h>
+#endif
 
 #if defined(_WIN32) && defined(_MSC_VER)
     #ifdef SonixTools
@@ -17,7 +19,7 @@ _Pragma("once");
     #define Sonix_API
 #endif
 
-class MeasureKitsPrivate;
+#define MeasureMethod(_Namespace, _MeasureType) auto measure##_MeasureType(const _Namespace::_MeasureType& _measureType, const std::vector<double>& _args) noexcept -> double
 
 class Sonix_API MeasureKits
 {
@@ -33,18 +35,24 @@ public:
 
 public:
     template <typename T, typename... Args>
-    auto measure(T&& _measureType, Args&&... args) noexcept -> double;
+    auto measure(T&& _measureType, Args&&... _args) noexcept -> double;
 
 private:
-    auto measurePrivate(const std::any& _measureType, const std::vector<double>& _args) noexcept -> double;
+    MeasureMethod(Department, Obstetrics);
 
-private:
-    MeasureKitsPrivate* m_measureKitsPrivate{nullptr};
+    MeasureMethod(Department, FetalWeight);
 };
 
 template <typename T, typename... Args>
-inline auto MeasureKits::measure(T&& _measureType, Args&&... args) noexcept -> double
+inline auto MeasureKits::measure(T&& _measureType, Args&&... _args) noexcept -> double
 {
-    static_assert(std::is_same_v<T, Department::Obstetrics> || std::is_same_v<T, Department::FetalWeight>, "Unsupported _measureType");
-    return this->measurePrivate(std::any{std::forward<T>(_measureType)}, std::vector<double>{static_cast<double>(std::forward<Args>(args))...});
+    if constexpr (std::is_same_v<std::remove_cvref_t<T>, Department::Obstetrics>)
+    {
+        return this->measureObstetrics(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(_args))...});
+    }
+    else if constexpr (std::is_same_v<std::remove_cvref_t<T>, Department::FetalWeight>)
+    {
+        return this->measureFetalWeight(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(_args))...});
+    }
+    return double{};
 }

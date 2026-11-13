@@ -16,3 +16,10 @@ if(MSVC)
         "/bigobj"
     )
 endif()
+
+if(ANDROID)
+    target_compile_options(${PROJECT_NAME}
+        PRIVATE
+        "-frtti"
+    )
+endif()

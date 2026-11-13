@@ -14,6 +14,13 @@ target_link_libraries(${PROJECT_NAME}
     ${PROJECT_NAME}-resources
 )
 
+if(ANDROID)
+    target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+        log
+    )
+endif()
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
     ${EXPRTK_INCLUDE_DIRS}
