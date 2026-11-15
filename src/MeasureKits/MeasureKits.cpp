@@ -58,5 +58,5 @@ auto MeasureKits::measureFetalWeight(const Department::FetalWeight& _measureType
         std::println("Formula table reading failed!");
         return double{};
     }
-    return std::pow(10, Private::calculate(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, _args));
+    return Private::calculate(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, _args);
 }
