@@ -3,7 +3,11 @@
 #include <cmrc/cmrc.hpp>
 #include <toml++/toml.hpp>
 #include "exprtk.hpp"
-// #include <print>
+#include <cstdio>
+
+#if defined(__ANDROID__)
+    #include <android/log.h>
+#endif
 
 CMRC_DECLARE(SonixToolsR);
 
@@ -22,7 +26,10 @@ namespace Private
         exprtk::parser<double> parser{};
         if (!parser.compile(_formula, expression))
         {
-            // std::println("Parser error:{}", parser.error());
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_ERROR, "spdlog", "Parser error:%s", parser.error().c_str());
+#endif
+            std::printf("Parser error:{}", parser.error());
             return double{};
         }
         return expression.value();
@@ -44,7 +51,10 @@ auto MeasureKits::measureObstetrics(const Department::Obstetrics& _measureType, 
     auto table{Private::measureTable[magic_enum::enum_type_name<Department::Obstetrics>()].as_table()};
     if (!table)
     {
-        // std::println("Formula table reading failed!");
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_ERROR, "spdlog", "Formula table reading failed!");
+#endif
+        std::printf("Formula table reading failed!");
         return double{};
     }
     return Private::calculate(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, _args);
@@ -55,7 +65,10 @@ auto MeasureKits::measureFetalWeight(const Department::FetalWeight& _measureType
     auto table{Private::measureTable[magic_enum::enum_type_name<Department::FetalWeight>()].as_table()};
     if (!table)
     {
-        // std::println("Formula table reading failed!");
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_ERROR, "spdlog", "Formula table reading failed!");
+#endif
+        std::printf("Formula table reading failed!");
         return double{};
     }
     return Private::calculate(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, _args);

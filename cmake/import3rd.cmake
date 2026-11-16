@@ -4,7 +4,7 @@ find_package(CMakeRC CONFIG REQUIRED)
 find_path(EXPRTK_INCLUDE_DIRS "exprtk.hpp")
 
 cmrc_add_resource_library(${PROJECT_NAME}-resources
-    NAMESPACE ${PROJECT_NAME}R
+    NAMESPACE "${PROJECT_NAME}R"
 )
 
 target_link_libraries(${PROJECT_NAME}

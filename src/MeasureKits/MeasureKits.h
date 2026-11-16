@@ -3,25 +3,21 @@ _Pragma("once");
 #include <vector>
 #include "MeasureConfig.hpp"
 
-#if defined(__ANDROID__)
-    #include <android/log.h>
-#endif
-
 #if defined(_WIN32) && defined(_MSC_VER)
-    #ifdef SonixTools
-        #define Sonix_API __declspec(dllexport)
+    #ifdef SONIXTOOLS_BUILDING
+        #define SONIX_DLL __declspec(dllexport)
     #else
-        #define Sonix_API __declspec(dllimport)
+        #define SONIX_DLL __declspec(dllimport)
     #endif
 #elif defined(__GNUC__) || defined(__clang__)
-    #define Sonix_API __attribute__((visibility("default")))
+    #define SONIX_DLL __attribute__((visibility("default")))
 #else
-    #define Sonix_API
+    #define SONIX_DLL
 #endif
 
 #define MeasureMethod(_Namespace, _MeasureType) auto measure##_MeasureType(const _Namespace::_MeasureType& _measureType, const std::vector<double>& _args) noexcept -> double
 
-class Sonix_API MeasureKits
+class SONIX_DLL MeasureKits
 {
 public:
     explicit MeasureKits(/*Object* = _parent*/);
