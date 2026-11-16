@@ -5,19 +5,19 @@ _Pragma("once");
 
 #if defined(_WIN32) && defined(_MSC_VER)
     #ifdef SONIXTOOLS_BUILDING
-        #define SONIX_DLL __declspec(dllexport)
+        #define SONIXTOOLS_DLL __declspec(dllexport)
     #else
-        #define SONIX_DLL __declspec(dllimport)
+        #define SONIXTOOLS_DLL __declspec(dllimport)
     #endif
 #elif defined(__GNUC__) || defined(__clang__)
-    #define SONIX_DLL __attribute__((visibility("default")))
+    #define SONIXTOOLS_DLL __attribute__((visibility("default")))
 #else
-    #define SONIX_DLL
+    #define SONIXTOOLS_DLL
 #endif
 
 #define MeasureMethod(_Namespace, _MeasureType) auto measure##_MeasureType(const _Namespace::_MeasureType& _measureType, const std::vector<double>& _args) noexcept -> double
 
-class SONIX_DLL MeasureKits
+class SONIXTOOLS_DLL MeasureKits
 {
 public:
     explicit MeasureKits(/*Object* = _parent*/);

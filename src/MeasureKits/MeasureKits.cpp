@@ -29,7 +29,7 @@ namespace Private
 #if defined(__ANDROID__)
             __android_log_print(ANDROID_LOG_ERROR, "spdlog", "Parser error:%s", parser.error().c_str());
 #endif
-            std::printf("Parser error:{}", parser.error());
+            std::printf("Parser error:%s", parser.error().c_str());
             return double{};
         }
         return expression.value();
