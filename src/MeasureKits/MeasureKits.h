@@ -24,7 +24,7 @@ _Pragma("once");
 class Sonix_API MeasureKits
 {
 public:
-    explicit(true) MeasureKits(/*Object* = _parent*/);
+    explicit MeasureKits(/*Object* = _parent*/);
 
     ~MeasureKits() noexcept;
 
@@ -46,11 +46,11 @@ private:
 template <typename T, typename... Args>
 inline auto MeasureKits::measure(T&& _measureType, Args&&... _args) noexcept -> double
 {
-    if constexpr (std::is_same_v<std::remove_cvref_t<T>, Department::Obstetrics>)
+    if constexpr (std::is_same_v<std::remove_cv_t<std::remove_reference_t<T>>, Department::Obstetrics>)
     {
         return this->measureObstetrics(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(_args))...});
     }
-    else if constexpr (std::is_same_v<std::remove_cvref_t<T>, Department::FetalWeight>)
+    else if constexpr (std::is_same_v<std::remove_cv_t<std::remove_reference_t<T>>, Department::FetalWeight>)
     {
         return this->measureFetalWeight(std::forward<T>(_measureType), std::vector<double>{static_cast<double>(std::forward<Args>(_args))...});
     }

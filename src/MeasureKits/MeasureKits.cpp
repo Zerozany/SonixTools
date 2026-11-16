@@ -3,7 +3,7 @@
 #include <cmrc/cmrc.hpp>
 #include <toml++/toml.hpp>
 #include "exprtk.hpp"
-#include <print>
+// #include <print>
 
 CMRC_DECLARE(SonixToolsR);
 
@@ -22,7 +22,7 @@ namespace Private
         exprtk::parser<double> parser{};
         if (!parser.compile(_formula, expression))
         {
-            std::println("Parser error:{}", parser.error());
+            // std::println("Parser error:{}", parser.error());
             return double{};
         }
         return expression.value();
@@ -32,7 +32,7 @@ namespace Private
 MeasureKits::MeasureKits()
 {
     auto measureFile{cmrc::SonixToolsR::get_filesystem().open("config/measure.toml")};
-    Private::measureTable = toml::parse(std::string_view{measureFile.begin(), measureFile.end()});
+    Private::measureTable = toml::parse(std::string_view{measureFile.begin(), measureFile.size()});
 }
 
 MeasureKits::~MeasureKits() noexcept
@@ -44,7 +44,7 @@ auto MeasureKits::measureObstetrics(const Department::Obstetrics& _measureType, 
     auto table{Private::measureTable[magic_enum::enum_type_name<Department::Obstetrics>()].as_table()};
     if (!table)
     {
-        std::println("Formula table reading failed!");
+        // std::println("Formula table reading failed!");
         return double{};
     }
     return Private::calculate(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, _args);
@@ -55,7 +55,7 @@ auto MeasureKits::measureFetalWeight(const Department::FetalWeight& _measureType
     auto table{Private::measureTable[magic_enum::enum_type_name<Department::FetalWeight>()].as_table()};
     if (!table)
     {
-        std::println("Formula table reading failed!");
+        // std::println("Formula table reading failed!");
         return double{};
     }
     return Private::calculate(std::string{(*table)[magic_enum::enum_name(_measureType)].value_or<std::string_view>(std::string_view{})}, _args);
