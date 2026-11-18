@@ -1,7 +1,7 @@
 _Pragma("once");
 #include <type_traits>
 #include <vector>
-#include "MeasureConfig.hpp"
+#include "MeasureType.hpp"
 
 #if defined(_WIN32) && defined(_MSC_VER)
     #ifdef SONIXTOOLS_BUILDING
